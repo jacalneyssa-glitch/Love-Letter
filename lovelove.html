@@ -1,0 +1,1301 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>For You 💗</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    overflow-x:hidden;
+    background:linear-gradient(135deg,#ffd6e7,#fff1f7,#ffcddd);
+    color:#863650;
+}
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+.heart{
+    position:absolute;
+    color:#ff5c91;
+    animation:heartFloat linear infinite;
+    opacity:.55;
+}
+
+.sparkle{
+    position:absolute;
+    color:white;
+    animation:sparkleAnimation 2s ease-in-out infinite;
+}
+
+.petal{
+    position:absolute;
+    width:12px;
+    height:19px;
+    background:#ff9fbd;
+    border-radius:100% 0 100% 0;
+    opacity:.5;
+    animation:petalFall linear infinite;
+}
+
+@keyframes heartFloat{
+    0%{
+        transform:translateY(110vh) rotate(0deg);
+        opacity:0;
+    }
+    15%{
+        opacity:.6;
+    }
+    100%{
+        transform:translateY(-15vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+@keyframes sparkleAnimation{
+    0%,100%{
+        opacity:.15;
+        transform:scale(.5);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.5);
+    }
+}
+
+@keyframes petalFall{
+    0%{
+        transform:translateY(-10vh) rotate(0deg);
+    }
+    100%{
+        transform:translateY(110vh) translateX(120px) rotate(720deg);
+    }
+}
+
+/* =========================
+   PASSWORD PAGE
+========================= */
+
+.password-screen{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:18px;
+    transition:opacity .8s,transform .8s;
+}
+
+.password-screen.hide{
+    opacity:0;
+    visibility:hidden;
+    transform:scale(1.08);
+}
+
+.password-card{
+    width:100%;
+    max-width:430px;
+    padding:38px 25px;
+    text-align:center;
+    border-radius:30px;
+    background:rgba(255,255,255,.88);
+    border:2px solid rgba(255,255,255,.9);
+    box-shadow:0 20px 70px rgba(150,50,90,.2);
+    backdrop-filter:blur(15px);
+    animation:cardAppear 1s ease;
+}
+
+@keyframes cardAppear{
+    from{
+        opacity:0;
+        transform:translateY(50px) scale(.85);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.lock{
+    width:85px;
+    height:85px;
+    margin:auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    background:linear-gradient(135deg,#ff6095,#ffabc7);
+    box-shadow:0 12px 30px rgba(255,80,140,.3);
+    animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.08)}
+}
+
+.password-card h1{
+    margin-top:20px;
+    font-size:clamp(25px,7vw,34px);
+    color:#a52e5b;
+}
+
+.password-card p{
+    margin:12px 0 24px;
+    line-height:1.6;
+    color:#ad5575;
+    font-size:15px;
+}
+
+.password-input{
+    width:100%;
+    height:55px;
+    border:2px solid #ffc0d5;
+    border-radius:17px;
+    outline:none;
+    background:#fff8fb;
+    text-align:center;
+    font-size:20px;
+    letter-spacing:7px;
+    color:#963255;
+}
+
+.password-input:focus{
+    border-color:#ff6599;
+    box-shadow:0 0 20px rgba(255,101,153,.18);
+}
+
+.unlock-btn{
+    width:100%;
+    min-height:55px;
+    margin-top:13px;
+    border:0;
+    border-radius:17px;
+    background:linear-gradient(135deg,#ff568c,#ff91b5);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(255,80,140,.25);
+}
+
+.unlock-btn:active{
+    transform:scale(.97);
+}
+
+.error{
+    min-height:25px;
+    margin-top:10px;
+    color:#df4772;
+    font-size:14px;
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.main{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:35px 18px 60px;
+}
+
+.main.show{
+    display:flex;
+    animation:mainAppear 1s ease;
+}
+
+@keyframes mainAppear{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+.intro{
+    text-align:center;
+    margin-bottom:35px;
+    animation:titleFloat 3s ease-in-out infinite;
+}
+
+@keyframes titleFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-7px)}
+}
+
+.intro h1{
+    color:#a32d5b;
+    font-size:clamp(30px,8vw,55px);
+}
+
+.intro p{
+    margin-top:8px;
+    color:#b45c7c;
+    font-size:15px;
+}
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope-area{
+    width:min(370px,88vw);
+    height:min(280px,67vw);
+    min-height:190px;
+    position:relative;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+.envelope{
+    position:absolute;
+    width:100%;
+    height:72%;
+    bottom:0;
+    background:#ffabc7;
+    border-radius:7px 7px 16px 16px;
+    box-shadow:0 25px 45px rgba(130,50,80,.25);
+}
+
+.envelope:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(145deg,transparent 49%,#ff8db3 50%),
+        linear-gradient(215deg,transparent 49%,#ff8db3 50%);
+    border-radius:7px 7px 16px 16px;
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:57%;
+    background:#ff8eb7;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top;
+    transition:1s ease;
+    z-index:5;
+}
+
+.heart-seal{
+    position:absolute;
+    z-index:10;
+    left:50%;
+    top:38%;
+    transform:translateX(-50%);
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#ff477f;
+    color:white;
+    font-size:28px;
+    box-shadow:0 8px 20px rgba(255,71,127,.35);
+    transition:.5s;
+}
+
+.envelope-text{
+    position:absolute;
+    z-index:8;
+    bottom:15px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.envelope-area.open .flap{
+    transform:rotateX(180deg);
+}
+
+.envelope-area.open .heart-seal{
+    opacity:0;
+    transform:translateX(-50%) scale(0);
+}
+
+.envelope-area.open .envelope{
+    transform:translateY(30px);
+}
+
+.click-hint{
+    margin-top:22px;
+    color:#a84c6d;
+    animation:hintBlink 1.7s infinite;
+}
+
+@keyframes hintBlink{
+    0%,100%{opacity:.4}
+    50%{opacity:1}
+}
+
+/* =========================
+   LETTER OVERLAY
+========================= */
+
+.letter-overlay{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    padding:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(160,60,100,.22);
+    backdrop-filter:blur(7px);
+    opacity:0;
+    visibility:hidden;
+    transition:.6s;
+}
+
+.letter-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.letter{
+    position:relative;
+    width:100%;
+    max-width:850px;
+    max-height:94vh;
+    overflow-y:auto;
+    padding:40px clamp(18px,5vw,50px);
+    border-radius:25px;
+    border:3px solid white;
+    background:
+        linear-gradient(
+            rgba(255,255,255,.95),
+            rgba(255,246,250,.97)
+        );
+    box-shadow:0 30px 90px rgba(120,40,75,.3);
+    transform:translateY(80px) scale(.75) rotate(-2deg);
+    transition:1s cubic-bezier(.17,.89,.32,1.28);
+    -webkit-overflow-scrolling:touch;
+}
+
+.letter-overlay.show .letter{
+    transform:translateY(0) scale(1) rotate(0);
+}
+
+.close{
+    position:absolute;
+    right:12px;
+    top:12px;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:#ffd1e0;
+    color:#a32e5c;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.letter-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.mini-heart{
+    font-size:35px;
+    animation:heartbeat 1.2s infinite;
+}
+
+.letter-header h2{
+    margin-top:8px;
+    font-family:Georgia,serif;
+    color:#a32e5c;
+    font-size:clamp(30px,8vw,48px);
+}
+
+.letter-header p{
+    margin-top:7px;
+    color:#bf6687;
+    font-size:14px;
+}
+
+.message{
+    font-family:Georgia,serif;
+    color:#704051;
+    font-size:17px;
+    line-height:1.85;
+}
+
+.message p{
+    margin-bottom:17px;
+}
+
+.highlight{
+    color:#e34878;
+    font-weight:bold;
+}
+
+/* =========================
+   PHOTOS
+========================= */
+
+.photos-title{
+    text-align:center;
+    color:#a32e5c;
+    font-family:Georgia,serif;
+    font-size:25px;
+    margin:30px 0 18px;
+}
+
+.photos{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.photo{
+    background:white;
+    padding:8px;
+    border-radius:6px;
+    box-shadow:0 10px 25px rgba(100,40,70,.17);
+    transition:.4s;
+}
+
+.photo:nth-child(1){
+    transform:rotate(-3deg);
+}
+
+.photo:nth-child(2){
+    transform:rotate(2deg);
+}
+
+.photo:nth-child(3){
+    transform:rotate(3deg);
+}
+
+.photo:hover{
+    transform:translateY(-8px) rotate(0) scale(1.03);
+}
+
+.photo img{
+    display:block;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+}
+
+.photo-caption{
+    padding:9px 4px 4px;
+    text-align:center;
+    color:#a74b6b;
+    font-size:12px;
+}
+
+.signature{
+    margin-top:25px;
+    text-align:right;
+    color:#a32e5c;
+    font-family:Georgia,serif;
+    font-size:19px;
+}
+
+.forever{
+    margin-top:25px;
+    padding:17px;
+    border-radius:18px;
+    text-align:center;
+    background:#ffe0eb;
+    color:#a32e5c;
+    font-weight:bold;
+}
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+.music-btn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:80;
+    width:52px;
+    height:52px;
+    border:0;
+    border-radius:50%;
+    background:white;
+    color:#a32e5c;
+    font-size:20px;
+    box-shadow:0 8px 25px rgba(100,40,70,.2);
+    cursor:pointer;
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:600px){
+
+    .password-card{
+        padding:32px 20px;
+        border-radius:25px;
+    }
+
+    .lock{
+        width:75px;
+        height:75px;
+        font-size:34px;
+    }
+
+    .main{
+        padding-top:25px;
+    }
+
+    .intro{
+        margin-bottom:25px;
+    }
+
+    .intro h1{
+        line-height:1.15;
+    }
+
+    .envelope-area{
+        width:88vw;
+        height:58vw;
+        min-height:175px;
+    }
+
+    .letter{
+        max-height:92vh;
+        border-radius:20px;
+        padding:38px 16px 25px;
+    }
+
+    .message{
+        font-size:16px;
+        line-height:1.75;
+    }
+
+    .photos{
+        grid-template-columns:1fr;
+        gap:20px;
+        padding:0 12px;
+    }
+
+    .photo:nth-child(1),
+    .photo:nth-child(2),
+    .photo:nth-child(3){
+        transform:none;
+    }
+
+    .photo img{
+        aspect-ratio:4/3;
+    }
+
+    .signature{
+        font-size:17px;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:380px){
+
+    .password-card{
+        padding:27px 16px;
+    }
+
+    .password-card h1{
+        font-size:25px;
+    }
+
+    .password-card p{
+        font-size:14px;
+    }
+
+    .envelope-area{
+        width:92vw;
+    }
+
+    .letter{
+        padding-left:13px;
+        padding-right:13px;
+    }
+
+    .message{
+        font-size:15px;
+    }
+}
+
+/* =========================
+   LANDSCAPE PHONE
+========================= */
+
+@media(max-height:550px) and (orientation:landscape){
+
+    .password-card{
+        padding:20px;
+    }
+
+    .lock{
+        width:60px;
+        height:60px;
+        font-size:28px;
+    }
+
+    .password-card h1{
+        margin-top:10px;
+        font-size:24px;
+    }
+
+    .password-card p{
+        margin:5px 0 10px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .intro{
+        margin-bottom:10px;
+    }
+
+    .envelope-area{
+        height:180px;
+    }
+
+    .letter{
+        max-height:96vh;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     BACKGROUND
+========================= -->
+
+<div class="background" id="background"></div>
+
+
+<!-- =========================
+     PASSWORD
+========================= -->
+
+<section class="password-screen" id="passwordScreen">
+
+    <div class="password-card">
+
+        <div class="lock">🔐</div>
+
+        <h1>A Little Surprise 💗</h1>
+
+        <p>
+            There is something special waiting for you.
+            <br>
+            Enter the secret password.
+        </p>
+
+        <input
+            id="password"
+            class="password-input"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="••••••"
+            autocomplete="off"
+        >
+
+        <button class="unlock-btn" onclick="unlock()">
+            💕 Unlock My Letter
+        </button>
+
+        <div class="error" id="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main" id="main">
+
+    <div class="intro">
+
+        <h1>For Someone Special 💕</h1>
+
+        <p>
+            A little surprise made especially for you...
+        </p>
+
+    </div>
+
+
+    <!-- ENVELOPE -->
+
+    <div
+        class="envelope-area"
+        id="envelopeArea"
+        onclick="openEnvelope()"
+    >
+
+        <div class="envelope">
+
+            <div class="flap"></div>
+
+            <div class="heart-seal">
+                ♥
+            </div>
+
+            <div class="envelope-text">
+                OPEN ME 💌
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="click-hint">
+        ✨ Tap the envelope ✨
+    </div>
+
+</main>
+
+
+<!-- =========================
+     LETTER
+========================= -->
+
+<div class="letter-overlay" id="letterOverlay">
+
+    <article class="letter">
+
+        <button
+            class="close"
+            onclick="closeLetter()"
+            aria-label="Close letter"
+        >
+            ×
+        </button>
+
+
+        <div class="letter-header">
+
+            <div class="mini-heart">
+                💗
+            </div>
+
+            <h2>My Love Letter</h2>
+
+            <p>
+                For the person who makes my world brighter.
+            </p>
+
+        </div>
+
+
+        <div class="message">
+
+            <p>
+                Dear <span class="highlight">My Love</span>,
+            </p>
+
+            <p>
+                I just wanted to make something special for you.
+                Sometimes words aren't enough to explain how much
+                someone means to us, so I made this little letter
+                just for you. 💕
+            </p>
+
+            <p>
+                Thank you for all the little moments, the laughs,
+                the memories, and even the simple conversations.
+                Every moment with you becomes a memory that I want
+                to keep forever.
+            </p>
+
+            <p>
+                You are one of the most beautiful parts of my life.
+                No matter how ordinary a day may seem, somehow
+                you always make it a little more special.
+            </p>
+
+
+            <!-- PHOTOS -->
+
+            <div class="photos-title">
+                📸 Our Little Memories 📸
+            </div>
+
+
+            <div class="photos">
+
+                <div class="photo">
+
+                    <img
+                        src="picture1.jpg"
+                        alt="Memory 1"
+                        loading="lazy"
+                    >
+
+                    <div class="photo-caption">
+                        One of my favorite memories 💗
+                    </div>
+
+                </div>
+
+
+                <div class="photo">
+
+                    <img
+                        src="picture2.jpg"
+                        alt="Memory 2"
+                        loading="lazy"
+                    >
+
+                    <div class="photo-caption">
+                        A moment I'll always remember ✨
+                    </div>
+
+                </div>
+
+
+                <div class="photo">
+
+                    <img
+                        src="picture3.jpg"
+                        alt="Memory 3"
+                        loading="lazy"
+                    >
+
+                    <div class="photo-caption">
+                        You make every moment special 💕
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <p style="margin-top:30px;">
+                I hope that whenever you see these pictures,
+                you remember all the little moments that made us
+                smile. And I hope we can create many more memories
+                together. 🌷
+            </p>
+
+
+            <p>
+                Whatever happens, I will always be grateful for
+                the memories we've created and for having you
+                in my life.
+            </p>
+
+
+            <div class="signature">
+
+                With all my love,<br>
+
+                <strong>
+                    Someone who loves you 💗
+                </strong>
+
+            </div>
+
+
+            <div class="forever">
+                ♡ You + Me = Beautiful Memories ♡
+            </div>
+
+        </div>
+
+    </article>
+
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<button
+    class="music-btn"
+    id="musicButton"
+    onclick="toggleMusic()"
+    aria-label="Music"
+>
+    🎵
+</button>
+
+<audio id="music" loop preload="auto">
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+
+/* =========================
+   PASSWORD
+========================= */
+
+const correctPassword = "041126";
+
+const passwordScreen =
+    document.getElementById("passwordScreen");
+
+const passwordInput =
+    document.getElementById("password");
+
+const error =
+    document.getElementById("error");
+
+const main =
+    document.getElementById("main");
+
+const music =
+    document.getElementById("music");
+
+
+function unlock(){
+
+    const entered =
+        passwordInput.value.trim();
+
+    if(entered === correctPassword){
+
+        error.textContent =
+            "Opening your surprise... 💗";
+
+        setTimeout(function(){
+
+            passwordScreen.classList.add("hide");
+
+            main.classList.add("show");
+
+            startMusic();
+
+        },700);
+
+    }else{
+
+        error.textContent =
+            "Wrong password... try again 💔";
+
+        passwordInput.value = "";
+
+        passwordInput.focus();
+
+    }
+}
+
+
+/* ENTER KEY */
+
+passwordInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+            unlock();
+        }
+
+    }
+);
+
+
+/* =========================
+   ENVELOPE
+========================= */
+
+let opened = false;
+
+function openEnvelope(){
+
+    if(opened) return;
+
+    opened = true;
+
+    const envelope =
+        document.getElementById("envelopeArea");
+
+    envelope.classList.add("open");
+
+    heartBurst();
+
+    setTimeout(function(){
+
+        document
+            .getElementById("letterOverlay")
+            .classList.add("show");
+
+    },900);
+}
+
+
+/* =========================
+   CLOSE
+========================= */
+
+function closeLetter(){
+
+    document
+        .getElementById("letterOverlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+function startMusic(){
+
+    music.volume = .4;
+
+    music.play().catch(function(){
+        // Mobile browsers may block autoplay.
+    });
+
+}
+
+
+function toggleMusic(){
+
+    const button =
+        document.getElementById("musicButton");
+
+    if(music.paused){
+
+        music.play();
+
+        button.textContent = "🎵";
+
+    }else{
+
+        music.pause();
+
+        button.textContent = "🔇";
+
+    }
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+const background =
+    document.getElementById("background");
+
+function random(min,max){
+
+    return Math.random() *
+        (max-min) + min;
+
+}
+
+
+/* HEARTS */
+
+for(let i=0;i<22;i++){
+
+    const heart =
+        document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML =
+        ["♥","♡","💗","💖","💕"]
+        [Math.floor(Math.random()*5)];
+
+    heart.style.left =
+        random(0,100) + "%";
+
+    heart.style.fontSize =
+        random(14,29) + "px";
+
+    heart.style.animationDuration =
+        random(8,16) + "s";
+
+    heart.style.animationDelay =
+        random(0,12) + "s";
+
+    background.appendChild(heart);
+}
+
+
+/* SPARKLES */
+
+for(let i=0;i<30;i++){
+
+    const sparkle =
+        document.createElement("div");
+
+    sparkle.className = "sparkle";
+
+    sparkle.innerHTML = "✦";
+
+    sparkle.style.left =
+        random(0,100) + "%";
+
+    sparkle.style.top =
+        random(0,100) + "%";
+
+    sparkle.style.animationDelay =
+        random(0,4) + "s";
+
+    background.appendChild(sparkle);
+}
+
+
+/* PETALS */
+
+for(let i=0;i<15;i++){
+
+    const petal =
+        document.createElement("div");
+
+    petal.className = "petal";
+
+    petal.style.left =
+        random(0,100) + "%";
+
+    petal.style.animationDuration =
+        random(9,17) + "s";
+
+    petal.style.animationDelay =
+        random(0,10) + "s";
+
+    background.appendChild(petal);
+}
+
+
+/* =========================
+   HEART BURST
+========================= */
+
+function heartBurst(){
+
+    for(let i=0;i<28;i++){
+
+        const heart =
+            document.createElement("div");
+
+        heart.innerHTML = "♥";
+
+        heart.style.position = "fixed";
+
+        heart.style.left = "50%";
+
+        heart.style.top = "50%";
+
+        heart.style.zIndex = "200";
+
+        heart.style.color =
+            ["#ff477f","#ff7faa","#ffabc7","#e94b75"]
+            [Math.floor(Math.random()*4)];
+
+        heart.style.fontSize =
+            random(15,34) + "px";
+
+        document.body.appendChild(heart);
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            random(120,400);
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+        heart.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(0)",
+                    opacity:1
+                },
+                {
+                    transform:
+                        `translate(${x}px,${y}px) scale(1.3)`,
+                    opacity:0
+                }
+            ],
+            {
+                duration:1200,
+                easing:"cubic-bezier(.17,.67,.38,1)",
+                fill:"forwards"
+            }
+        );
+
+        setTimeout(function(){
+            heart.remove();
+        },1300);
+
+    }
+}
+
+
+/* =========================
+   CLICK OUTSIDE LETTER
+========================= */
+
+document
+    .getElementById("letterOverlay")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeLetter();
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
+```
